@@ -1,0 +1,76 @@
+
+:root {
+    --primary-font: Roboto, sans-serif;
+
+    --transition: all 0.3s linear;
+
+}
+
+/*
+======================
+NAVBAR
+======================
+*/
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(140, 140, 140);
+    font-family: var(--primary-font);
+}
+
+.logo {
+    height: 40px;
+}
+
+.profile-image {
+    height: 40px;
+}
+
+.menu {
+    height: 0;
+    overflow: hidden;
+    transition: var(--transition);}
+
+header nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+}
+
+li {
+    list-style: none;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.show-links {
+    height: 5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .user-name {
+        display: none;
+    }
+
+    .profile-image {
+        height: 40px;
+    }
+
+    header {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .menu {
+        height: auto;
+        display: flex;
+    }
+}
