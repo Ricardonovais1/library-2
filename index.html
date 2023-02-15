@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./normalize.css">
     <link rel="stylesheet" href="./styles.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-fOe+z3lrFolxlZpoxK9X97B5CJr5yKj5y5f5L2bzw8kdblnKt/qApuKlHv1GWAPwUC8xqb3FqfCfcBv9XheozQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+     
+      
     <title>Book Library</title>
 </head>
 <body>
@@ -13,15 +16,71 @@
         <img src="./img/book.png" alt="logo" class="logo">
         <nav class="menu">
             <ul>
-                <li>Novo Livro</li>
-                <li>Logout</li>
+                
             </ul>
         </nav>
         <span class="profile-info">
-            <img src="./img/ardo.png" alt="image profile" class="profile-image">
-            <p class="user-name">Ricardo Novais</p>
+            <button class="new-btn">Novo Livro</button>
+            <!-- <img src="./img/ardo.png" alt="image profile" class="profile-image">
+            <p class="user-name">Ricardo Novais</p> -->
+            
         </span>
     </header>
+    <div class="cards">
+        <!-- <div class="card">
+            <span class="b-name">
+                <h3>Livro:</h3>
+                <p>Nome do livro</p>
+            </span>
+            <span class="b-author">
+                <h3>Autor:</h3>
+                <p>Autor do livro</p>
+            </span>
+            <span class="b-pages">
+                <h3>Páginas:</h3>
+                <p>Nº de páginas</p>
+            </span>
+            <span class="b-read">
+                <h3>Lido:</h3>
+                <input type="checkbox">
+            </span>    
+        </div>
+        <div class="card">
+            <span class="b-name">
+                <h3>Livro:</h3>
+                <p>Nome do livro</p>
+            </span>
+            <span class="b-author">
+                <h3>Autor:</h3>
+                <p>Autor do livro</p>
+            </span>
+            <span class="b-pages">
+                <h3>Páginas:</h3>
+                <p>Nº de páginas</p>
+            </span>
+            <span class="b-read">
+                <h3>Lido:</h3>
+                <input type="checkbox">
+            </span>    
+    </div> -->
+    <div class="wrapper hide">
+        
+        <div class="modal">
+            <div class="modal-close">x</div>
+            <h2 class="modal-title">Novo Livro</h2>
+            <label for="book-title">Nome:
+                <input id="book-title" type="text">
+            </label>
+            <label for="book-author">Autor:
+                <input id="book-author" type="text">
+            </label>
+            <label for="book-pages">Páginas:
+                <input id="book-pages" type="number">
+            </label>
+            
+            <button id="save-book" type="submit">Salvar</button>
+        </div>
+    </div>
 
     <script src="./app.js"></script>
 </body>
