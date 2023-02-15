@@ -9,7 +9,17 @@ const saveBook = document.getElementById('save-book');
 const cardsContainer = document.querySelector('.cards');
 
 
-let bookShelf = []
+const bookShelfJSON = localStorage.getItem('bookShelf');
+let bookShelf;
+
+if (bookShelfJSON === null) {
+  bookShelf = [];
+} else {
+  bookShelf = JSON.parse(bookShelfJSON);
+}
+
+// const bookShelfJSON = localStorage.getItem('bookShelf');
+// const bookShelfSave = JSON.parse(bookShelfJSON) ;
 
 // Open modal
 newBook.addEventListener('click', () => {
@@ -47,9 +57,14 @@ saveBook.addEventListener('click', ()=> {
         Read: false
     })
 
+    console.log(bookShelf)
+
     // Salvar no localSatorage:
     const bookShelfJSON = JSON.stringify(bookShelf)
     localStorage.setItem('bookShelf', bookShelfJSON)
+
+    console.log(bookShelfJSON)
+    console.log(bookShelf)
 
     createBookCard(bookShelf[bookShelf.length - 1], bookShelf.length + 1);
 
@@ -131,23 +146,27 @@ const createBookCard = (bookObj, index) => {
 
     trashIcon.addEventListener('click', (e) => {
         const index = e.target.closest('.card').getAttribute('data-index');
-
         bookShelf.splice(index, 1);
         cardsContainer.removeChild(bookCard);
+
+        const cards = document.querySelectorAll('.card');
+
         // Salvar no localSatorage:
         const bookShelfJSON = JSON.stringify(bookShelf)
-        localStorage.setItem('bookShelf', bookShelfJSON)   
+        localStorage.setItem('bookShelf', bookShelfJSON) 
+
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].setAttribute('data-index', i)
+        }
+
+         
     })
 } 
 
-const bookShelfJSON = localStorage.getItem('bookShelf');
-const bookShelfSave = JSON.parse(bookShelfJSON) ;
 
-bookShelfSave.forEach((book, index) => {
+bookShelf.forEach((book, index) => {
     createBookCard(book, index);
 })
-
-console.log(bookShelf)
 
 
 
