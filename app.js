@@ -258,34 +258,22 @@ const createBookCard = (bookObj, index) => {
   })
   editSaveBook.addEventListener('click', (e) => {
     bookShelf.map((book) => {
-        console.log(book.id)
-        console.log(book)
-        
-        console.log(+bId)
         if(book.id === +bId) {
             book.Nome = editBookTitle.value;
             book.Autor = editBookAuthor.value;
             book.Páginas = editBookPages.value;
+            
+            const bookShelfJSON = JSON.stringify(bookShelf);
+            localStorage.setItem("bookShelf", bookShelfJSON);
+            
+            editModalWrapper.classList.add('hide')
             location.reload()
-            console.log(book)
-
         } else {
             return 
         }
     })
-    console.log(bId)
     
-
-
-
-    
-
-    
-    
-    const bookShelfJSON = JSON.stringify(bookShelf);
-    localStorage.setItem("bookShelf", bookShelfJSON);
-    
-    editModalWrapper.classList.add('hide')
+   
 })
 
  
