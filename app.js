@@ -7,10 +7,12 @@ const bookAuthor = document.getElementById('book-author');
 const bookPages = document.getElementById('book-pages');
 const saveBook = document.getElementById('save-book');
 const cardsContainer = document.querySelector('.cards');
+const checkbox = document.querySelector('.read-or-not');
 
 
 const bookShelfJSON = localStorage.getItem('bookShelf');
 let bookShelf;
+
 
 if (bookShelfJSON === null) {
   bookShelf = [];
@@ -18,8 +20,7 @@ if (bookShelfJSON === null) {
   bookShelf = JSON.parse(bookShelfJSON);
 }
 
-// const bookShelfJSON = localStorage.getItem('bookShelf');
-// const bookShelfSave = JSON.parse(bookShelfJSON) ;
+
 
 // Open modal
 newBook.addEventListener('click', () => {
@@ -134,8 +135,17 @@ const createBookCard = (bookObj, index) => {
     bPages.appendChild(contentPages);
 
     const contentRead = document.createElement('input');
+    contentRead.className = 'read-or-not';
+    contentRead.checked = bookObj.Read;
+    contentRead.addEventListener('click', () => {
+        bookObj.Read = !bookObj.Read
+
+        // Salvar Checked no localStorage:
+        const bookShelfJSON = JSON.stringify(bookShelf)
+        localStorage.setItem('bookShelf', bookShelfJSON) 
+    });
+
     contentRead.type = "checkbox";
-    contentRead.checked = false;
     contentRead.textContent = bookObj.bookRead;
     bRead.appendChild(contentRead);
 
@@ -157,10 +167,21 @@ const createBookCard = (bookObj, index) => {
 
         for (let i = 0; i < cards.length; i++) {
             cards[i].setAttribute('data-index', i)
-        }
+        }        
+    });
 
-         
-    })
+    contentRead.addEventListener("change", (e) => {
+        let readOrNot = e.target.closest('.read-or-not').checked
+    
+        //Salvar no localSatorage:
+        const bookShelfJSON = JSON.stringify(bookShelf)
+        localStorage.setItem('checkboxState', readOrNot) 
+        if (this.checked) {
+            localStorage.setItem('myCheckboxStatus', 'checked');
+          } else {
+            localStorage.setItem('myCheckboxStatus', 'unchecked');
+          }
+        });
 } 
 
 
