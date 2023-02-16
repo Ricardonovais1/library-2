@@ -1,18 +1,27 @@
-const newBook = document.querySelector('.new-btn');
-const modalWrapper = document.querySelector('.wrapper');
-const closeModal = document.querySelector('.modal-close');
-const modal = document.querySelector('.modal');
-const bookTitle = document.getElementById('book-title');
-const bookAuthor = document.getElementById('book-author');
-const bookPages = document.getElementById('book-pages');
-const saveBook = document.getElementById('save-book');
-const cardsContainer = document.querySelector('.cards');
-const checkbox = document.querySelector('.read-or-not');
+const newBook = document.querySelector(".new-btn");
+const editModalWrapper = document.querySelector(".edit-wrapper");
+const editCloseModal = document.querySelector(".edit-modal-close");
+const editModal = document.querySelector(".edit-modal");
+const editBookTitle = document.getElementById("edit-book-title");
+const editBookAuthor = document.getElementById("edit-book-author");
+const editBookPages = document.getElementById("edit-book-pages");
+const editModalClose = document.querySelector(".edit-modal-close");
+const editSaveBook = document.getElementById("edit-save-book");
 
 
-const bookShelfJSON = localStorage.getItem('bookShelf');
+
+const modalWrapper = document.querySelector(".wrapper");
+const closeModal = document.querySelector(".modal-close");
+const modal = document.querySelector(".modal");
+const bookTitle = document.getElementById("book-title");
+const bookAuthor = document.getElementById("book-author");
+const bookPages = document.getElementById("book-pages");
+const saveBook = document.getElementById("save-book");
+const cardsContainer = document.querySelector(".cards");
+const checkbox = document.querySelector(".read-or-not");
+
+const bookShelfJSON = localStorage.getItem("bookShelf");
 let bookShelf;
-
 
 if (bookShelfJSON === null) {
   bookShelf = [];
@@ -23,171 +32,265 @@ if (bookShelfJSON === null) {
 
 
 // Open modal
-newBook.addEventListener('click', () => {
-    modalWrapper.classList.remove('hide');
-    bookTitle.focus()
-    bookTitle.value = "";
-    bookAuthor.value = "";
-    bookPages.value = "";
-}); 
+newBook.addEventListener("click", () => {
+  modalWrapper.classList.remove("hide");
+  bookTitle.focus();
+  bookTitle.value = "";
+  bookAuthor.value = "";
+  bookPages.value = "";
+});
 
 // Close modal
-modalWrapper.addEventListener('click', (e) => {
-    const classesThatClosePopup = ['wrapper', 'modal-close'];
-    const clickedElement = e.target.classList[0]
-    let shouldClose = classesThatClosePopup.includes(clickedElement)
-    if (shouldClose) modalWrapper.classList.add('hide')
+modalWrapper.addEventListener("click", (e) => {
+  const classesThatClosePopup = ["wrapper", "modal-close"];
+  const clickedElement = e.target.classList[0];
+  let shouldClose = classesThatClosePopup.includes(clickedElement);
+  if (shouldClose) modalWrapper.classList.add("hide");
 });
 
 class Book {
-    constructor (name, author, pages, read) {
-        this.name = name,
-        this.author = author,
-        this.pages = pages,
-        this.read = read
-    }
+  constructor(id, name, author, pages, read) {
+    this.id = id,
+    this.name = name,
+    this.author = author,
+    this.pages = pages,
+    this.read = read;
+  }
 }
 
-saveBook.addEventListener('click', ()=> {
-    let customBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value, false)
-   
-    bookShelf.push({
-        Title: customBook.name,
-        Author: customBook.author,
-        Pages: customBook.pages,
-        Read: false
-    })
+saveBook.addEventListener("click", () => {
+  let customBook = new Book(
+    Date.now(),
+    bookTitle.value,
+    bookAuthor.value,
+    bookPages.value,
+    false
+  );
 
-    console.log(bookShelf)
+  bookShelf.push({
+    id: customBook.id,
+    Nome: customBook.name,
+    Autor: customBook.author,
+    Páginas: customBook.pages,
+    Lido: false,
+  });
 
-    // Salvar no localSatorage:
-    const bookShelfJSON = JSON.stringify(bookShelf)
-    localStorage.setItem('bookShelf', bookShelfJSON)
+  console.log(bookShelf);
 
-    console.log(bookShelfJSON)
-    console.log(bookShelf)
+  // Salvar no localSatorage:
+  const bookShelfJSON = JSON.stringify(bookShelf);
+  localStorage.setItem("bookShelf", bookShelfJSON);
 
-    createBookCard(bookShelf[bookShelf.length - 1], bookShelf.length + 1);
+  console.log(bookShelfJSON);
+  console.log(bookShelf);
 
-    modalWrapper.classList.add('hide')
-})
+  createBookCard(bookShelf[bookShelf.length - 1], bookShelf.length + 1);
+
+  modalWrapper.classList.add("hide");
+});
 
 const createBookCard = (bookObj, index) => {
+  let bookId = bookObj.id
+  let bookkeys = Object.keys(bookObj);
+  
 
-    let bookkeys = Object.keys(bookObj);
+  // Create book Card
+  const bookCard = document.createElement("div");
+  bookCard.className = "card";
+  bookCard.setAttribute("book-id", bookId);
+  bookCard.setAttribute("data-index", index);
+  cardsContainer.appendChild(bookCard);
 
-    // Create book Card
-    const bookCard = document.createElement('div');
-    bookCard.className = "card";
-    bookCard.setAttribute("data-index", index);
-    cardsContainer.appendChild(bookCard)
+  // Create info area
+  const infoArea = document.createElement("div");
+  infoArea.className = "info";
+  bookCard.appendChild(infoArea);
 
-    // Create info area
-    const infoArea = document.createElement('div');
-    infoArea.className = 'info';
-    bookCard.appendChild(infoArea)
+  // Create Spans
+  const bName = document.createElement("span");
+  bName.className = "b-name";
+  infoArea.appendChild(bName);
 
-    // Create Spans
-    const bName = document.createElement('span');
-    bName.className = 'b-name';
-    infoArea.appendChild(bName);
+  const bAuthor = document.createElement("span");
+  bAuthor.className = "b-author";
+  infoArea.appendChild(bAuthor);
 
-    const bAuthor = document.createElement('span');
-    bAuthor.className = 'b-author';
-    infoArea.appendChild(bAuthor);
+  const bPages = document.createElement("span");
+  bPages.className = "b-pages";
+  infoArea.appendChild(bPages);
 
-    const bPages = document.createElement('span');
-    bPages.className = 'b-pages';
-    infoArea.appendChild(bPages);
+  const bRead = document.createElement("span");
+  bRead.className = "b-read";
+  infoArea.appendChild(bRead);
 
-    const bRead = document.createElement('span');
-    bRead.className = 'b-read';
-    infoArea.appendChild(bRead)
+  // Create Labels
+  const labelTitle = document.createElement("h3");
+  labelTitle.textContent = `${bookkeys[1]}: `;
+  bName.appendChild(labelTitle);
 
-    // Create Labels
-    const labelTitle = document.createElement('h3');
-    labelTitle.textContent = `${bookkeys[0]}: `;
-    bName.appendChild(labelTitle);
+  const labelAuthor = document.createElement("h3");
+  labelAuthor.textContent = `${bookkeys[2]}: `;
+  bAuthor.appendChild(labelAuthor);
 
-    const labelAuthor = document.createElement('h3');
-    labelAuthor.textContent = `${bookkeys[1]}: `;
-    bAuthor.appendChild(labelAuthor);
+  const labelPages = document.createElement("h3");
+  labelPages.textContent = `${bookkeys[3]}: `;
+  bPages.appendChild(labelPages);
 
-    const labelPages = document.createElement('h3');
-    labelPages.textContent = `${bookkeys[2]}: `;
-    bPages.appendChild(labelPages);
+  const labelRead = document.createElement("h3");
+  labelRead.textContent = `${bookkeys[4]}: `;
+  bRead.appendChild(labelRead);
 
-    const labelRead = document.createElement('h3');
-    labelRead.textContent = `${bookkeys[3]}: `;
-    bRead.appendChild(labelRead);
+  // Create Dynamic content
+  const contentTitle = document.createElement("p");
+  contentTitle.className = "content-title";
+  contentTitle.textContent = bookObj.Nome;
+  bName.appendChild(contentTitle);
 
-    // Create Dynamic content
-    const contentTitle = document.createElement('p');
-    contentTitle.textContent = bookObj.Title;
-    bName.appendChild(contentTitle);
+  const contentAuthor = document.createElement("p");
+  contentAuthor.className = "content-author";
+  contentAuthor.textContent = bookObj.Autor;
+  bAuthor.appendChild(contentAuthor);
 
-    const contentAuthor = document.createElement('p');
-    contentAuthor.textContent = bookObj.Author;
-    bAuthor.appendChild(contentAuthor);
+  const contentPages = document.createElement("p");
+  contentPages.className = 'content-pages';
+  contentPages.textContent = bookObj.Páginas;
+  bPages.appendChild(contentPages);
 
-    const contentPages = document.createElement('p');
-    contentPages.textContent = bookObj.Pages;
-    bPages.appendChild(contentPages);
+  const contentRead = document.createElement("input");
+  contentRead.className = "read-or-not";
+  contentRead.checked = bookObj.Read;
+  contentRead.addEventListener("click", () => {
+    bookObj.Read = !bookObj.Read;
 
-    const contentRead = document.createElement('input');
-    contentRead.className = 'read-or-not';
-    contentRead.checked = bookObj.Read;
-    contentRead.addEventListener('click', () => {
-        bookObj.Read = !bookObj.Read
+    // Salvar Checked no localStorage:
+    const bookShelfJSON = JSON.stringify(bookShelf);
+    localStorage.setItem("bookShelf", bookShelfJSON);
+  });
 
-        // Salvar Checked no localStorage:
-        const bookShelfJSON = JSON.stringify(bookShelf)
-        localStorage.setItem('bookShelf', bookShelfJSON) 
-    });
+  contentRead.type = "checkbox";
+  contentRead.textContent = bookObj.bookRead;
+  bRead.appendChild(contentRead);
 
-    contentRead.type = "checkbox";
-    contentRead.textContent = bookObj.bookRead;
-    bRead.appendChild(contentRead);
+  const iconsArea = document.createElement('div')
+  iconsArea.className = "icons";
+  bookCard.appendChild(iconsArea);
 
-    const trashIcon = document.createElement('img');
-    trashIcon.className = "trash-icon";
-    trashIcon.src = "./img/trask-icon.png";
-    bookCard.appendChild(trashIcon)
+  const editIcon = document.createElement("img");
+  editIcon.className = "edit-icon";
+  editIcon.src = "./img/edit-icon.png";
+  iconsArea.appendChild(editIcon);
 
-    trashIcon.addEventListener('click', (e) => {
-        const index = e.target.closest('.card').getAttribute('data-index');
-        bookShelf.splice(index, 1);
-        cardsContainer.removeChild(bookCard);
+  const trashIcon = document.createElement("img");
+  trashIcon.className = "trash-icon";
+  trashIcon.src = "./img/trask-icon.png";
+  iconsArea.appendChild(trashIcon);
 
-        const cards = document.querySelectorAll('.card');
+  trashIcon.addEventListener("click", (e) => {
+    const index = e.target.closest(".card").getAttribute("data-index");
+    bookShelf.splice(index, 1);
+    cardsContainer.removeChild(bookCard);
 
-        // Salvar no localSatorage:
-        const bookShelfJSON = JSON.stringify(bookShelf)
-        localStorage.setItem('bookShelf', bookShelfJSON) 
+    const cards = document.querySelectorAll(".card");
 
-        for (let i = 0; i < cards.length; i++) {
-            cards[i].setAttribute('data-index', i)
-        }        
-    });
+    // Salvar no localSatorage:
+    const bookShelfJSON = JSON.stringify(bookShelf);
+    localStorage.setItem("bookShelf", bookShelfJSON);
 
-    contentRead.addEventListener("change", (e) => {
-        let readOrNot = e.target.closest('.read-or-not').checked
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].setAttribute("data-index", i);
+    }
+
     
-        //Salvar no localSatorage:
-        const bookShelfJSON = JSON.stringify(bookShelf)
-        localStorage.setItem('checkboxState', readOrNot) 
-        if (this.checked) {
-            localStorage.setItem('myCheckboxStatus', 'checked');
-          } else {
-            localStorage.setItem('myCheckboxStatus', 'unchecked');
-          }
-        });
-} 
+  });
+
+  contentRead.addEventListener("change", (e) => {
+    let readOrNot = e.target.closest(".read-or-not").checked;
+
+    //Salvar no localSatorage:
+    const bookShelfJSON = JSON.stringify(bookShelf);
+    localStorage.setItem("checkboxState", readOrNot);
+    if (this.checked) {
+      localStorage.setItem("myCheckboxStatus", "checked");
+    } else {
+      localStorage.setItem("myCheckboxStatus", "unchecked");
+    }
+  });
+
+    // Open edit modal
+    editIcon.addEventListener("click", () => {
+    editModalWrapper.classList.remove("hide");
+    editBookTitle.focus();
+    editBookTitle.value = "";
+    editBookAuthor.value = "";
+    editBookPages.value = "";
+  });
+  
+    // Close edit modal
+    editModalWrapper.addEventListener("click", (e) => {
+    const classesThatClosePopup = ["edit-wrapper", "edit-modal-close"];
+    const clickedElement = e.target.classList[0];
+    let shouldClose = classesThatClosePopup.includes(clickedElement);
+    if (shouldClose) editModalWrapper.classList.add("hide");
+  });
+
+  const editButtons = document.querySelectorAll('.edit-icon');
+
+  editButtons.forEach(button => {
+
+    button.addEventListener('click', (e) => {
+        const bookCard = e.target.closest('.card');
+
+        bId = bookCard.getAttribute("book-id");
+        const bookTitle = bookCard.querySelector('.content-title').textContent;
+        const bookAuthor = bookCard.querySelector('.content-author').textContent;
+        const bookPages = bookCard.querySelector('.content-pages').textContent;
 
 
-bookShelf.forEach((book, index) => {
-    createBookCard(book, index);
+        // Display original data:
+        editBookTitle.value = bookTitle;
+        editBookAuthor.value = bookAuthor;
+        editBookPages.value = bookPages;
+
+        
+    })
+
+    
+  })
+  editSaveBook.addEventListener('click', (e) => {
+    bookShelf.map((book) => {
+        console.log(book.id)
+        console.log(book)
+        
+        console.log(+bId)
+        if(book.id === +bId) {
+            book.Nome = editBookTitle.value;
+            book.Autor = editBookAuthor.value;
+            book.Páginas = editBookPages.value;
+            location.reload()
+            console.log(book)
+
+        } else {
+            return 
+        }
+    })
+    console.log(bId)
+    
+
+
+
+    
+
+    
+    
+    const bookShelfJSON = JSON.stringify(bookShelf);
+    localStorage.setItem("bookShelf", bookShelfJSON);
+    
+    editModalWrapper.classList.add('hide')
 })
 
+ 
+};
 
-
+bookShelf.forEach((book, index) => {
+  createBookCard(book, index);
+});

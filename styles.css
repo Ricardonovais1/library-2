@@ -68,12 +68,13 @@ li {
     display: flex;
     align-items: center !important;
     justify-content: space-between;
+    font-size: .8rem;
     padding-left: 1rem;
     padding-right: 1rem;
     border: 0px solid #000;
     padding: .3rem auto;
     border-radius: .3rem;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 1rem;
     width: 80vw;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
@@ -84,6 +85,7 @@ li {
 .info {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: .5rem;
 }
@@ -105,7 +107,8 @@ li {
     margin: .5rem;
 }
 
-.wrapper {
+.wrapper,
+.edit-wrapper {
     background: rgba(0, 0, 0, .8);
     position: fixed;
     top: 0;
@@ -117,7 +120,8 @@ li {
     align-items: center;
 }
 
-.modal {
+.modal,
+.edit-modal {
     display: flex;
     background-color: #e2a165;
     flex-direction: column;
@@ -130,18 +134,21 @@ li {
 }
 
 
-.modal label {
+.modal label,
+.edit-modal label {
     display: flex;
     justify-content: space-between;
     gap: .5rem;
 }
 
-.modal-title {
+.modal-title,
+.edit-modal-title {
     align-self: center;
     margin-top: -1rem;
 }
 
-.modal button {
+.modal button,
+.edit-modal button {
     margin-top: 1rem;
     border: none;
     border-radius: .2rem;
@@ -150,13 +157,21 @@ li {
     padding: .3rem;
 }
 
-.trash-icon {
+.trash-icon,
+.edit-icon {
     height: 1rem;
     justify-self: flex-end;
 }
 
+.icons {
+    display: flex;
+    gap: .2rem;
+    padding-left: .5rem;
+    /* border-left: 1px solid #3e3e3e; */
+}
 
-.modal-close {
+.modal-close,
+.edit-modal-close {
     padding-top: .5rem;
     align-self: self-end;
     cursor: pointer;
@@ -168,9 +183,15 @@ li {
 
 #book-title,
 #book-author,
-#book-pages {
+#book-pages,
+#edit-book-title,
+#edit-book-author,
+#edit-book-pages {
     border: none;
     border-bottom: 1px solid #a1a1a1;
+    padding: .4rem;
+    font-size: .8rem;
+    
 }
 
 @media screen and (max-width: 600px) {
@@ -189,7 +210,16 @@ li {
 
     .card {
         gap: .2rem;
-        padding: 1rem;
+        /* padding: 1rem; */
+    }
+
+    .card span {
+        height: 2.5rem;
+    }
+
+
+    .info {
+        gap: .2rem;
     }
 }
 

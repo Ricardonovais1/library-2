@@ -27,42 +27,7 @@
         </span>
     </header>
     <div class="cards">
-        <!-- <div class="card">
-            <span class="b-name">
-                <h3>Livro:</h3>
-                <p>Nome do livro</p>
-            </span>
-            <span class="b-author">
-                <h3>Autor:</h3>
-                <p>Autor do livro</p>
-            </span>
-            <span class="b-pages">
-                <h3>Páginas:</h3>
-                <p>Nº de páginas</p>
-            </span>
-            <span class="b-read">
-                <h3>Lido:</h3>
-                <input type="checkbox">
-            </span>    
-        </div>
-        <div class="card">
-            <span class="b-name">
-                <h3>Livro:</h3>
-                <p>Nome do livro</p>
-            </span>
-            <span class="b-author">
-                <h3>Autor:</h3>
-                <p>Autor do livro</p>
-            </span>
-            <span class="b-pages">
-                <h3>Páginas:</h3>
-                <p>Nº de páginas</p>
-            </span>
-            <span class="b-read">
-                <h3>Lido:</h3>
-                <input type="checkbox">
-            </span>    
-    </div> -->
+       <!-- Cards inseridos dinamicamente aqui -->
     <div class="wrapper hide">
         
         <div class="modal">
@@ -79,6 +44,24 @@
             </label>
             
             <button id="save-book" type="submit">Salvar</button>
+        </div>
+    </div>
+    <div class="edit-wrapper hide">
+        
+        <div class="edit-modal">
+            <div class="edit-modal-close">x</div>
+            <h2 class="edit-modal-title">Editar</h2>
+            <label for="edit-book-title">Nome:
+                <input id="edit-book-title" type="text">
+            </label>
+            <label for="edit-book-author">Autor:
+                <input id="edit-book-author" type="text">
+            </label>
+            <label for="edit-book-pages">Páginas:
+                <input id="edit-book-pages" type="number">
+            </label>
+            
+            <button id="edit-save-book" type="submit">Salvar</button>
         </div>
     </div>
 
